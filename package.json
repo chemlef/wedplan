@@ -1,0 +1,13 @@
+{
+  "name": "wedplan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wedding planning workspace: guests, seating, invitations, budget, flowers, menu, vendors, timeline, music and more.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node --env-file-if-exists=.env server.js",
+    "start": "node server.js",
+    "check": "node scripts/check.js"
+  }
+}
