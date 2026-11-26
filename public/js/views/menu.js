@@ -237,7 +237,7 @@ export default {
       ui.tab === 'library' ? h('div', { class: 'mt' }, library())
         : ui.tab === 'ideas' ? (ideas.length ? courseLists(ideas) : h('div', { class: 'card center muted mt' }, 'Save dishes you’re considering from “Browse dishes”.'))
           : onMenu.length ? courseLists(onMenu)
-            : emptyState('menu_food', 'Build your menu', 'Browse Greek, Mediterranean and classic wedding dishes, or let WedPlan suggest complete menus that cover your guests’ dietary needs.',
+            : emptyState('menu_food', 'Build your menu', 'Browse Greek, Mediterranean and classic wedding dishes, or let MyWedPlan suggest complete menus that cover your guests’ dietary needs.',
               editable && h('div', { class: 'row', style: { justifyContent: 'center' } }, h('button', { class: 'btn', onclick: () => { ui.tab = 'library'; rr(); } }, 'Browse dishes'), h('button', { class: 'btn primary', onclick: () => generatorSheet(summary) }, icon('wand'), 'Suggest a menu'))));
   },
 };

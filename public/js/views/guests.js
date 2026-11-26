@@ -215,7 +215,7 @@ export function emailSheet(guests) {
   sheet({
     title: 'Prepare emails', size: 'wide',
     body: h('div', { class: 'form' },
-      h('div', { class: 'small muted' }, `${plural(withEmail.length, 'guest')} with an email address${guests.length - withEmail.length ? ` · ${guests.length - withEmail.length} without one (included in the mail-merge file only)` : ''}. WedPlan doesn’t send email: download drafts to send from your own mail account.`),
+      h('div', { class: 'small muted' }, `${plural(withEmail.length, 'guest')} with an email address${guests.length - withEmail.length ? ` · ${guests.length - withEmail.length} without one (included in the mail-merge file only)` : ''}. MyWedPlan doesn’t send email: download drafts to send from your own mail account.`),
       field('Template', select(Object.entries(TEMPLATES).map(([value, t]) => ({ value, label: t.label })), st.tpl, (v) => {
         st.tpl = v; st.subject = TEMPLATES[v].subject; st.body = TEMPLATES[v].body; subj.value = st.subject; bodyEl.value = st.body;
         st.includeLink = v !== 'thanks'; linkToggle.querySelector('input').checked = st.includeLink;

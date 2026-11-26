@@ -215,7 +215,7 @@ function bouquetsTab(editable) {
   return h('div', null,
     h('div', { class: 'card' },
       h('div', { class: 'card-title' }, icon('wand'), 'Bouquet maker'),
-      h('div', { class: 'card-sub' }, 'Choose colours, a style and the month — WedPlan picks flowers that match, are in season, and work together.'),
+      h('div', { class: 'card-sub' }, 'Choose colours, a style and the month — MyWedPlan picks flowers that match, are in season, and work together.'),
       h('div', { class: 'form-row mt' },
         field('Colours', select(allPalettes.map((p, i) => ({ value: i, label: p.name })), Math.max(0, allPalettes.findIndex((p) => p.colors.join() === pal.join())), (v) => { ui.bPalette = allPalettes[v].colors; ui.bOptions = null; rr(); })),
         field('Style', select(BOUQUET_STYLES, st.style, (v) => { st.style = v; ui.bOptions = null; rr(); })),

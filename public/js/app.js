@@ -81,7 +81,7 @@ async function boot() {
     const me = await api.get('/api/auth/me');
     store.session = me.kind ? me : null;
   } catch (e) {
-    root.replaceChildren(h('div', { class: 'auth' }, h('div', { class: 'card center' }, h('h2', null, 'Can’t reach WedPlan'), h('p', { class: 'muted mt' }, e.message),
+    root.replaceChildren(h('div', { class: 'auth' }, h('div', { class: 'card center' }, h('h2', null, 'Can’t reach MyWedPlan'), h('p', { class: 'muted mt' }, e.message),
       h('button', { class: 'btn primary mt', onclick: () => location.reload() }, 'Try again'))));
     return;
   }
@@ -96,7 +96,7 @@ async function openWedding(id) {
     await loadWedding(id);
     localStorage.setItem('wp_wedding', id);
     applyAccent(store.wedding.accent);
-    document.title = `${coupleNames()} · WedPlan`;
+    document.title = `${coupleNames()} · MyWedPlan`;
   } catch (e) {
     localStorage.removeItem('wp_wedding');
     toast(e.message, { error: true });
@@ -143,7 +143,7 @@ async function render(fromStore = false) {
 // ------------------------------------------------------------------ auth screens
 function logo(sub) {
   return h('div', { class: 'auth-logo' }, h('div', { class: 'mark' }, icon('ring')),
-    h('h1', { class: 'wordmark' }, 'Wed', h('b', null, 'Plan')), h('p', null, sub));
+    h('h1', { class: 'wordmark' }, 'MyWed', h('b', null, 'Plan')), h('p', null, sub));
 }
 function renderAuth(mode) {
   currentPath = null; shell = null;
@@ -207,7 +207,7 @@ export async function signOut() {
 async function renderWeddings(fromStore) {
   currentPath = null; shell = null;
   applyAccent();
-  document.title = 'Your weddings · WedPlan';
+  document.title = 'Your weddings · MyWedPlan';
   if (!fromStore || !store.weddings.length) {
     try { store.weddings = (await api.get('/api/weddings')).weddings; } catch (e) { toast(e.message, { error: true }); }
   }
@@ -225,7 +225,7 @@ async function renderWeddings(fromStore) {
   });
   root.replaceChildren(h('div', { class: 'content', style: { maxWidth: '1100px' } },
     h('div', { class: 'page-head' },
-      h('div', null, h('h1', { class: 'wordmark' }, 'Wed', h('b', null, 'Plan')), h('div', { class: 'sub' }, `Welcome${u.name ? `, ${u.name.split(' ')[0]}` : ''}. Choose a wedding or start a new one.`)),
+      h('div', null, h('h1', { class: 'wordmark' }, 'MyWed', h('b', null, 'Plan')), h('div', { class: 'sub' }, `Welcome${u.name ? `, ${u.name.split(' ')[0]}` : ''}. Choose a wedding or start a new one.`)),
       h('div', { class: 'actions' },
         h('button', { class: 'btn', onclick: (e) => menu(e.currentTarget, [
           { label: 'Light appearance', icon: 'sun', onClick: () => { localStorage.setItem('wp_theme', 'light'); applyTheme(); } },

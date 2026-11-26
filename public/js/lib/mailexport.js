@@ -1,4 +1,4 @@
-// Builds email drafts for export (nothing is sent by WedPlan):
+// Builds email drafts for export (nothing is sent by MyWedPlan):
 //  - .eml files marked as unsent drafts (open in Apple Mail, Outlook, Thunderbird), bundled in a ZIP
 //  - a mail-merge CSV for Word, Gmail add-ons (YAMM, GMass) or Outlook mail merge
 

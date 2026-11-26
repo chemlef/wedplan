@@ -41,7 +41,7 @@ const mapLink = (q) => `https://maps.google.com/?q=${encodeURIComponent(q)}`;
 function ics() {
   const w = data.wedding; if (!w.date) return;
   const d = w.date.replace(/-/g, ''); const t = (w.time || '17:00').replace(':', '');
-  const body = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//WedPlan//EN', 'BEGIN:VEVENT', `UID:${token}@wedplan`, `DTSTART:${d}T${t}00`, `DTEND:${d}T235900`,
+  const body = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//MyWedPlan//EN', 'BEGIN:VEVENT', `UID:${token}@wedplan`, `DTSTART:${d}T${t}00`, `DTEND:${d}T235900`,
     `SUMMARY:${[w.partner1, w.partner2].filter(Boolean).join(' & ')}`, `LOCATION:${[w.ceremony?.name, w.ceremony?.address].filter(Boolean).join(', ').replace(/[,;]/g, (m) => `\\${m}`)}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   const a = h('a', { href: URL.createObjectURL(new Blob([body], { type: 'text/calendar' })), download: 'wedding.ics' });
   document.body.append(a); a.click(); a.remove();
@@ -126,7 +126,7 @@ function render() {
   root.replaceChildren(h('div', { class: 'rsvp-wrap' }, designBox,
     h('div', { class: 'rsvp-greet' }, `${S.dear} ${people.map((p) => p.first || p.name).join(' & ')},`),
     details, form,
-    h('div', { class: 'center xs faint' }, 'WedPlan')));
+    h('div', { class: 'center xs faint' }, 'MyWedPlan')));
 }
 
 async function submit(e) {

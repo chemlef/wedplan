@@ -75,7 +75,7 @@ function memberSheet(m) {
 
 function shareSheet(m, password) {
   const url = `${location.origin}/join/${store.wedding.code}`;
-  const text = `Hi ${m.name || ''}! You can help plan the wedding on WedPlan:\n${url}\nWedding code: ${store.wedding.code}\nUsername: ${m.username}${password ? `\nPassword: ${password}` : ''}`;
+  const text = `Hi ${m.name || ''}! You can help plan the wedding on MyWedPlan:\n${url}\nWedding code: ${store.wedding.code}\nUsername: ${m.username}${password ? `\nPassword: ${password}` : ''}`;
   sheet({
     title: 'Share their sign-in', size: 'narrow',
     body: h('div', { class: 'form' },
@@ -91,7 +91,7 @@ async function addPlanner() {
     const inp = input({ type: 'email', placeholder: 'their@email.com' });
     let v = null;
     sheet({ title: 'Add a co-planner', size: 'narrow', doneLabel: 'Add',
-      body: h('div', { class: 'form' }, h('p', { class: 'small muted' }, 'Co-planners have full access, like you. They need their own WedPlan planner account first.'), field('Their account email', inp)),
+      body: h('div', { class: 'form' }, h('p', { class: 'small muted' }, 'Co-planners have full access, like you. They need their own MyWedPlan planner account first.'), field('Their account email', inp)),
       done: () => { v = inp.value.trim(); }, onClose: () => resolve(v) });
   });
   if (!email) return;

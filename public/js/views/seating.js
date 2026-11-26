@@ -382,7 +382,7 @@ function build() {
       editable && h('button', { class: 'btn primary', onclick: autoSheet, disabled: !tables.length }, icon('wand'), 'Auto-arrange')));
 
   if (!list('table').length) {
-    container.replaceChildren(head, emptyState('seating', 'Set up your tables', 'Add tables in the shapes and sizes your venue has. Then drag guests onto them, or let WedPlan suggest a seating plan based on who knows whom.',
+    container.replaceChildren(head, emptyState('seating', 'Set up your tables', 'Add tables in the shapes and sizes your venue has. Then drag guests onto them, or let MyWedPlan suggest a seating plan based on who knows whom.',
       editable && h('button', { class: 'btn primary', onclick: addTablesSheet }, icon('plus'), 'Add tables')));
     return;
   }

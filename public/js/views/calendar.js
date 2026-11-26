@@ -53,7 +53,7 @@ function collect() {
 
 function icsFile(items) {
   const escI = (s) => String(s ?? '').replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/[,;]/g, (m) => `\\${m}`);
-  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//WedPlan//EN', `X-WR-CALNAME:${escI(coupleNames())}`];
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//MyWedPlan//EN', `X-WR-CALNAME:${escI(coupleNames())}`];
   items.forEach((it, i) => {
     const d = it.date.replace(/-/g, '');
     lines.push('BEGIN:VEVENT', `UID:${d}-${i}@wedplan`, `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}Z`);

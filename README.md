@@ -1,4 +1,4 @@
-# WedPlan
+# MyWedPlan
 
 A wedding-planning workspace for planners, couples and their koumbaroi. Apple-inspired interface, built on Node.js with **zero npm dependencies**, hosted on **Vercel**, data in **Turso**.
 
@@ -10,7 +10,7 @@ A wedding-planning workspace for planners, couples and their koumbaroi. Apple-in
 | **Guest list** | Guests with contact details, side, group, household (shared invitation), plus-ones, children, VIPs, RSVP, meal choice, dietary needs, kitchen notes, who they know / must be kept apart from, gifts and thank-you tracking. CSV import/export, filters, bulk actions, printing. |
 | **Seating** | Tables of any shape and size (round, rectangular, square, head, sweetheart, kids') and floor items (dance floor, stage, bar…). Drag-and-drop floor plan and table cards, per-guest table suggestions, and **auto-arrange**, which offers three plans (friends together / by family & group / mix & mingle). It keeps households together and never seats keep-apart pairs at the same table. Exports CSV, table plan, "find your seat" list, place cards, a kitchen sheet and the floor plan. |
 | **Invitations & RSVP** | A design editor with templates: classic, romantic florals, modern, Greek olive, Aegean arch, save the date, menu. You can add text with automatic details ({couple}, {date_long}, {guest}…), photos, flowers and bouquets, ornaments, shapes and frames, and use layers, undo/redo, snapping and keyboard shortcuts. Prints to PDF, optionally one card per guest. Every guest gets a personal **online invitation + RSVP page** (English or Greek) for the whole household: meal choice, dietary needs, plus-one, song request and a message. |
-| **Emails** | WedPlan never sends email. It **exports** personalised drafts instead: a ZIP of `.eml` drafts (one per guest, opens in Apple Mail, Outlook or Thunderbird) or a **mail-merge CSV** (Word, Outlook, YAMM, GMass). |
+| **Emails** | MyWedPlan never sends email. It **exports** personalised drafts instead: a ZIP of `.eml` drafts (one per guest, opens in Apple Mail, Outlook or Thunderbird) or a **mail-merge CSV** (Word, Outlook, YAMM, GMass). |
 | **Checklist** | A full planning timeline generated from the wedding date (with Greek Orthodox or civil extras), squeezed to fit if the wedding is sooner than a year away. Relative or fixed due dates, categories, owners and notes. |
 | **Calendar** | A month view of tasks, appointments, tastings, fittings, payment due dates and the wedding day. Download as `.ics`, or **subscribe** with a private link (Apple, Google or Outlook calendar). |
 | **Budget** | Categories with suggested split, expenses with estimates vs. actuals and payment schedules (deposit/balance), an allocation donut, spent-vs-planned bars, cost per guest and upcoming payments. CSV export. |
@@ -55,17 +55,17 @@ npm run check          # syntax-check every file
    | `TURSO_DATABASE_URL` | yes | `libsql://…turso.io` |
    | `TURSO_AUTH_TOKEN` | yes | |
    | `SESSION_SECRET` | yes | long random string (`openssl rand -hex 32`) |
-   | `APP_URL` | recommended | e.g. `https://wedplan.vercel.app`, used for OAuth redirects |
+   | `APP_URL` | recommended | e.g. `https://mywedplan.vercel.app`, used for OAuth redirects |
    | `SPOTIFY_CLIENT_ID` / `SPOTIFY_CLIENT_SECRET` | optional | redirect URI: `$APP_URL/api/spotify/callback` |
    | `PINTEREST_APP_ID` / `PINTEREST_APP_SECRET` | optional | redirect URI: `$APP_URL/api/pinterest/callback` |
 
 3. Push to `main` and Vercel deploys.
 
 ### Spotify notes
-Since February 2026, Spotify Development-Mode apps need the developer to have **Spotify Premium** and allow up to **5 users** (add them under *User Management* in the Spotify dashboard). That's plenty for one wedding. WedPlan uses the current endpoints (`POST /me/playlists`, `/playlists/{id}/items`).
+Since February 2026, Spotify Development-Mode apps need the developer to have **Spotify Premium** and allow up to **5 users** (add them under *User Management* in the Spotify dashboard). That's plenty for one wedding. MyWedPlan uses the current endpoints (`POST /me/playlists`, `/playlists/{id}/items`).
 
 ### Pinterest & Instagram
-Pinterest's API lets you read your own boards and pins once you create an app at developers.pinterest.com (trial access is enough for your own account). Instagram no longer offers an API for personal accounts, so WedPlan embeds posts from pasted links instead.
+Pinterest's API lets you read your own boards and pins once you create an app at developers.pinterest.com (trial access is enough for your own account). Instagram no longer offers an API for personal accounts, so MyWedPlan embeds posts from pasted links instead.
 
 ## Project layout
 

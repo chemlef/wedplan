@@ -23,4 +23,4 @@ http.createServer(async (req, res) => {
   }
   res.setHeader('Content-Type', TYPES[path.extname(file)] || 'application/octet-stream');
   fs.createReadStream(file).pipe(res);
-}).listen(PORT, () => console.log(`WedPlan running at http://localhost:${PORT}`));
+}).listen(PORT, () => console.log(`MyWedPlan running at http://localhost:${PORT}`));
