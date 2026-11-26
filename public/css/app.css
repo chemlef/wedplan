@@ -93,6 +93,11 @@ p { margin: 0; }
 .right { text-align: right; }
 .pos { color: var(--green-text); } .neg { color: var(--red-text); } .warn { color: var(--orange-text); }
 
+svg.icon { flex-shrink: 0; vertical-align: -0.2em; }
+.card-title svg.icon { width: 20px; height: 20px; color: var(--accent); }
+.small svg.icon, .xs svg.icon, .meta svg.icon { width: 15px; height: 15px; }
+.chip svg.icon { width: 13px; height: 13px; }
+
 /* ---------------------------------------------------------------- app shell */
 .app { display: flex; min-height: 100vh; }
 .sidebar {

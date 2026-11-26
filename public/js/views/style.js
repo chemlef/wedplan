@@ -113,6 +113,48 @@ function flowersTab() {
     !fs.length ? h('div', { class: 'card center muted' }, 'No flowers match these filters.') : null);
 }
 
+// ------------------------------------------------------------------ visual flower picker
+// Grid of illustrated flowers, shown in the colour closest to the palette. Pick a colour, then add.
+export function flowerPickerSheet({ palette, onPick, title = 'Add a flower' }) {
+  const st = { q: '', kind: '', season: !!weddingMonth() };
+  const m = weddingMonth();
+  const grid = h('div', { class: 'grid', style: { gridTemplateColumns: 'repeat(auto-fill,minmax(150px,1fr))', gap: '10px' } });
+  const draw = () => {
+    const q = st.q.toLowerCase();
+    const fs = FLOWERS.filter((f) => (!st.kind || f.kind === st.kind || (st.kind === 'filler' && f.kind === 'line'))
+      && (!st.season || !m || f.months.includes(m)) && (!q || `${f.name} ${f.greek} ${f.meaning}`.toLowerCase().includes(q)));
+    grid.replaceChildren(...fs.map((f) => {
+      let color = palette?.length && f.kind !== 'greenery' ? flowerPaletteFit(f, palette).color : f.colors[0];
+      const art = html(flowerSvg(f, color), null, { height: '110px', display: 'grid', placeItems: 'center' });
+      art.querySelector('svg').style.height = '100%';
+      const dots = h('div', { class: 'row wrap', style: { gap: '4px', justifyContent: 'center' } }, f.colors.slice(0, 9).map((c) => h('button', {
+        class: ['color-dot', c === color && 'on'], style: { background: c, width: '16px', height: '16px' }, title: colorName(c), 'aria-label': colorName(c),
+        onclick: (e) => {
+          e.stopPropagation(); color = c;
+          art.innerHTML = flowerSvg(f, c); art.querySelector('svg').style.height = '100%';
+          dots.querySelectorAll('.color-dot').forEach((d) => d.classList.remove('on')); e.currentTarget.classList.add('on');
+        },
+      })));
+      return h('div', { class: 'card flower-card', style: { padding: '10px', gap: '4px' } }, art,
+        h('div', { class: 'center' }, h('div', { class: 'nm small' }, f.name), h('div', { class: 'gr' }, `${f.greek} · ${KIND_LABEL[f.kind].toLowerCase()}`)),
+        dots,
+        h('button', { class: 'btn s tinted', style: { marginTop: '6px' }, onclick: () => { onPick(f, color); toast(`${f.name} added`); } }, icon('plus'), 'Add'));
+    }));
+    if (!fs.length) grid.append(h('div', { class: 'small muted' }, 'No flowers match.'));
+  };
+  draw();
+  sheet({
+    title, size: 'xwide',
+    body: h('div', { class: 'col' },
+      h('div', { class: 'toolbar', style: { marginBottom: 0 } },
+        h('div', { class: 'search' }, icon('search'), input({ placeholder: 'Search flowers or meanings…', oninput: (e) => { st.q = e.target.value; draw(); } })),
+        select([{ value: '', label: 'All types' }, { value: 'focal', label: 'Focal flowers' }, { value: 'secondary', label: 'Secondary' }, { value: 'filler', label: 'Fillers & spikes' }, { value: 'greenery', label: 'Greenery' }], '', (v) => { st.kind = v; draw(); }, { class: 'input s', style: { width: 'auto' } }),
+        m ? h('label', { class: 'row small muted' }, `In season in ${MONTHS[m - 1]}`, toggle(st.season, (v) => { st.season = v; draw(); })) : null,
+        h('span', { class: 'xs faint' }, 'Tap a colour to preview it, then Add. Add as many as you like.')),
+      grid),
+  });
+}
+
 // ------------------------------------------------------------------ bouquets
 function bouquetEditor(editable) {
   const b = ui.b;
@@ -136,11 +178,13 @@ function bouquetEditor(editable) {
           h('span', { class: 'grow small' }, h('b', null, f?.name), h('span', { class: 'muted' }, ` · ${it.role}`)),
           h('div', { class: 'row', style: { gap: '3px' } }, (f?.colors || []).slice(0, 9).map((c) => h('button', { class: ['color-dot', c === it.color && 'on'], style: { background: c, width: '16px', height: '16px' }, 'aria-label': colorName(c), onclick: () => { it.color = c; rr(); } }))),
           h('button', { class: 'btn plain icon s', 'aria-label': 'Remove flower', onclick: () => { b.items.splice(i, 1); rr(); } }, icon('x')));
-      }), h('div', { class: 'list-item', style: { padding: '6px 10px' } }, select([{ value: '', label: '+ Add a flower…' }, ...FLOWERS.map((f) => ({ value: f.id, label: `${f.name} (${KIND_LABEL[f.kind].toLowerCase()})` }))], '', (v) => {
-        if (!v) return; const f = flowerById(v);
-        b.items.push({ id: v, color: f.kind === 'greenery' ? f.colors[0] : flowerPaletteFit(f, pal).color, role: f.kind === 'focal' ? 'focal' : f.kind === 'greenery' ? 'greenery' : f.kind === 'secondary' ? 'secondary' : 'filler' });
-        rr();
-      }, { class: 'input s' })))),
+      }), h('div', { class: 'list-item tap', style: { padding: '8px 10px', color: 'var(--accent)' }, onclick: () => flowerPickerSheet({
+        palette: pal,
+        onPick: (f, color) => {
+          b.items.push({ id: f.id, color, role: f.kind === 'focal' ? 'focal' : f.kind === 'greenery' ? 'greenery' : f.kind === 'secondary' ? 'secondary' : 'filler' });
+          rr();
+        },
+      }) }, icon('plus'), 'Add a flower…'))),
       field('Ribbon', h('div', { class: 'row wrap' }, [...new Set([...pal, '#ffffff', '#f3ead6', '#d4af37'])].map((c) => h('button', { class: ['color-dot', c === b.ribbon && 'on'], style: { background: c, width: '24px', height: '24px' }, 'aria-label': colorName(c), onclick: () => { b.ribbon = c; rr(); } })))),
       meanings.length ? h('div', { class: 'card', style: { background: 'var(--fill-3)', boxShadow: 'none' } }, h('div', { class: 'label' }, 'What this bouquet says'),
         h('div', { class: 'col gap-s mt small' }, meanings.map((m) => h('div', null, h('b', null, m.name), ` — ${m.meaning.toLowerCase()}.`)))) : null,

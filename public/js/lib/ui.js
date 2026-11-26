@@ -121,7 +121,10 @@ export function icon(name, cls) {
   const el = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   el.setAttribute('viewBox', '0 0 24 24');
   el.setAttribute('aria-hidden', 'true');
-  if (cls) el.setAttribute('class', cls);
+  // Default size so an icon never stretches to fill its container; CSS rules can still resize it.
+  el.setAttribute('width', '18');
+  el.setAttribute('height', '18');
+  el.setAttribute('class', `icon${cls ? ` ${cls}` : ''}`);
   if (FILLED[name]) el.innerHTML = BRAND[name];
   else el.innerHTML = `<path d="${P[name] || P.info}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>`;
   return el;
